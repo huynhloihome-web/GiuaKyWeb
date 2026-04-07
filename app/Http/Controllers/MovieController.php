@@ -103,15 +103,15 @@ class MovieController extends Controller
     public function genre($id)
     {
         $data = DB::table("movie as m")
-            ->join("movie_genre as mg", "m.id", "=", "mg.movie_id")
+            ->join("movie_genre as mg", "m.id", "=", "mg.id_movie")
             ->where("m.status", 1)
-            ->where("mg.genre_id", $id)
+            ->where("mg.id_genre", $id)
             ->orderBy("m.release_date", "desc")
             ->select("m.*")
             ->limit(12)
             ->get();
 
-        return view("movie.index", compact("data"));
+        return view("index", compact("data"));
     }
 
     public function search(Request $request)
@@ -123,6 +123,6 @@ class MovieController extends Controller
             ["%" . $keyword . "%"]
         );
 
-        return view("movie.index", compact("data"));
+        return view("index", compact("data"));
     }
 }
